@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <title>Pedro's ToDoIst</title>
+</head>
+<body>
+    <header class="header">
+        <div>
+            <i class="fa-solid fa-list-check" id="logo"></i>
+            <input type="search" class="pesquisa" placeholder="Procurar uma Atividade">
+        </div>
+        <div>
+            <ul class="lista-conteiner">
+                <li class="item-lista"><i class="fas fa-plus"></i></li>
+                <li class="item-lista"><i class="fas fa-battery-three-quarters"></i></li>
+                <li class="item-lista"><i class="far fa-question"></i></li>
+                <i class="fa-solid fa-list-check" id="logo-iphone"></i>
+            </ul>            
+        </div>
+    </header>
+    
+    <!-- Body da Página -->
+
+    <section class="body">
+        <div class="title-top">
+            <h1>Suas Atividades</h1>
+            <p id="data-hoje"></p>
+            <p class="classificacao"> <i id="prioridade-cima" class="fa-solid fa-arrow-up"></i>Classificado por prioridade</p>
+            <hr class="separator">
+        </div>
+        <div class="atividades-atrasadas">
+            <h2><i id="abrir-atividades" class="fa-solid fa-arrow-down"></i>Atividades Atrasadas</h2>
+            <ul class="lista-atividades">
+                <li class="atividades">Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>
+                <li class="atividades"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ab.</li>
+                <li class="atividades"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque, officiis.</li>
+                <li class="atividades">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, esse!</li>
+            </ul>
+        </div>
+
+        <div class="atividades-hoje">
+            <h2><i id="abrir-atividades" class="fa-solid fa-arrow-down"></i>Fazer Hoje</h2>
+            <ul class="lista-atividades">
+                <li class="atividades">Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>
+                <li class="atividades"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ab.</li>
+                <li class="atividades"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque, officiis.</li>
+                <li class="atividades">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, esse!</li>
+            </ul>
+        </div>
+
+        <div class="atividades-embreve">
+            <h2><i id="abrir-atividades" class="fa-solid fa-arrow-down"></i>Em breve</h2>
+            <ul class="lista-atividades">
+                <li class="atividades">Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>
+                <li class="atividades"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ab.</li>
+                <li class="atividades"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque, officiis.</li>
+                <li class="atividades">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, esse!</li>
+            </ul>
+        </div>
+    </section>
+
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+.body{
+    width: 70%;
+    margin: 0 auto; 
+    text-align: center;
+    padding: 1rem;
+}
+
+.title-top {
+    margin: 30px 0 30px 0;
+}
+
+.title-top h1{
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--vermelho);
+}
+
+#data-hoje {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.classificacao {
+    margin: 15px 0 10px 0;
+    font-size: 0.8rem;
+}
+
+.separator{
+    margin: 12px 0; 
+}
+
+#prioridade-cima {
+    margin-right: 5px;
+}
+
+.atividades-atrasadas{
+    margin: 30px 0 30px 0;
+}
+
+.atividades-hoje{
+    margin: 30px 0 30px 0;
+}
+
+.atividades-embreve{
+    margin: 30px 0 30px 0;
+}
+
+#abrir-atividades {
+    font-size: 14px;
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    justify-content: center;
+    color: var(--vermelho);
+}
+
+#abrir-atividades:hover {
+    background-color: var(--branco);
+    border: solid 1px var(--laranja);
+    transform: scale(1.08);
+    cursor: pointer;
+}
+
+.lista-atividades {
+    margin: 20px 0 20px 0;
+    list-style: none;
+}
+
+.atividades {
+    margin: 15px 0 15px 0;
+}
+
+@media (max-width: 800px) {
+    .body {
+        width: 100%;
+    }
+}
+

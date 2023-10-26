@@ -1,0 +1,92 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 8vh;
+    background-color: var(--laranja);
+    padding: 2rem;
+}
+
+#logo {
+    font-size: 2rem;
+}
+
+.lista-conteiner {
+    display: flex;
+    list-style-type: none;
+}
+
+.item-lista {
+    margin-right: 20px;
+    background-color: var(--preto);
+    width: 2.5vw;
+    text-align: center;
+    border: solid 1px var(--preto);
+    border-radius: 12px;
+    padding: 0.2rem;
+    font-size: 1.1rem;
+    color: var(--branco);
+}
+
+.item-lista:hover{
+    transform: scale(1.08);
+    cursor: pointer;
+}
+
+.pesquisa {
+    background-color: transparent;
+    border: solid 1px var(--preto);
+    color: var(--branco);
+    border-radius: 12px;
+    padding: 0.5rem;
+    margin-left: 1rem;
+    width: 20vw; /* Alterado para preencher 100% da largura na versão móvel */
+    text-align: center;
+    background: url(../icones/Pesquisa.svg) 10px center no-repeat; /* Ajuste o valor de "10px" conforme necessário */
+}
+
+.pesquisa::placeholder {
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--branco);
+    text-align: center;
+}
+
+#logo-iphone {
+    display: none;
+}
+
+/* Media query para dispositivos com largura máxima de 600px (tamanho típico de telefone) */
+@media (max-width: 1000px) {
+    .header {
+        padding: 1rem; /* Reduzir o espaçamento no cabeçalho */
+    }
+
+    .pesquisa {
+        width: 120%; /* Preenche 100% da largura na versão móvel */
+        margin: 0; /* Remove a margem esquerda */
+        background: none;
+    }
+
+    #logo {
+        display: none;
+    }
+
+    .item-lista {
+        width: 32px;
+        border-radius: 15px;
+        margin-right: 8px; 
+    }
+
+    #logo-iphone {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-size: 2rem;
+        margin-left: 8px;
+    }
+}
+
+
