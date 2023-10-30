@@ -98,6 +98,7 @@
 
 .riscado {
     text-decoration: line-through;
+    color: var(--laranja);
 }
 
 
