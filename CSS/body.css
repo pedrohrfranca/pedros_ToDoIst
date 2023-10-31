@@ -71,6 +71,12 @@
     list-style: none;
 }
 
+/* Adicione margens aos elementos <li> */
+.lista-atividades li {
+    margin-bottom: 15px;
+}
+
+
 .atividades {
     margin: 15px 0 15px 0;
 }
@@ -101,6 +107,34 @@
     color: var(--laranja);
 }
 
+.resultados-pesquisa {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; 
+    z-index: 1000; 
+}
+
+.resultados-pesquisa h2 {
+    margin-top: 0;
+    color: var(--vermelho);
+    font-size: 22px;
+    margin-bottom: 1rem;
+}
+
+.excluir-button {
+    background-color: transparent;
+    border: none;
+    color: var(--vermelho);
+    cursor: pointer;
+}
 
 
 
