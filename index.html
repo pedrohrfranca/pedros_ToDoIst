@@ -19,8 +19,9 @@
         <div>
             <ul class="lista-conteiner">
                 <li class="item-lista" id="adicionar-tarefa"><i class="fas fa-plus"></i></li>
-                <li class="item-lista"><i class="fas fa-battery-three-quarters"></i></li>
-                <li class="item-lista"><i class="far fa-question"></i></li>
+                <li class="item-lista" id="carregar-atividades"><i class="fas fa-battery-three-quarters"></i></li>
+                <div id="status-carregamento"></div>
+                <li class="item-lista" id="ajuda"><i class="far fa-question"></i></li>
                 <i class="fa-solid fa-list-check" id="logo-iphone"></i>
             </ul>            
         </div>
@@ -68,8 +69,22 @@
             <h2>Resultados da Pesquisa:</h2>
             <ul id="searchResults"></ul>
         </div>
+        <div id="central-ajuda">
+            <h2>Central de Ajuda</h2>
+            <p>Olá! Precisa de uma mãozinha para usar Pedro's ToDoIst?</p>
+            <p>Aqui estão algumas dicas rápidas:</p>
+            <ul>
+                <li><strong>Adicionar Tarefas:</strong> Clique no botão "+ Adicionar" para criar uma nova tarefa. Digite os detalhes e selecione "Salvar".</li>
+                <li><strong>Produtividade</strong> Clique sobre a "Bateria" para saber quantas Tarefas já foram feitas e quantas ainda faltam para serem concluídas.</li>
+                <li><strong>Concluir e Deletar Tarefas:</strong> Assim que completar uma tarefa, clique no ícone de "check" ao lado dela para marcá-la como concluída. Para deletar uma tarefa é só clicar no "Lixeira" ao lado direito da tarefa</li>
+                <li><strong>Organizar Tarefas:</strong> Use as categorias ou etiquetas para organizar suas tarefas por projetos, prioridades ou como preferir.</li>
+                <li><strong>Buscar Atividade:</strong> Clique no campo "Procurar uma Atividade" e descreva sua atividade para encontrá-la</li>
+            </ul>
+            <p>Se você tiver perguntas específicas ou encontrar algum problema, por favor, entre em contato conosco através do "pedrof_bh@hotmail.com" ou acesse nossa seção de Perguntas Frequentes (FAQ).</p>
+            <p>Obrigado por escolher o Pedro's ToDoIst para organizar seu dia a dia!</p>
+            <button onclick="fecharCentralAjuda()">Fechar</button>
+        </div>
     </section>
-
 
     <script src="main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
