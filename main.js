@@ -44,15 +44,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-// ADICIONAR TAREFA
+// ADICIONAR ATIVIDADE
 
 document.addEventListener("DOMContentLoaded", function () {
+    const PRIORIDADES = {
+        alta: 'Alta',
+        media: 'Média',
+        baixa: 'Baixa'
+    };
+
     const lateTasksList = document.querySelector(".atividades-atrasadas .lista-atividades");
     const todayTasksList = document.querySelector(".atividades-hoje .lista-atividades");
     const upcomingTasksList = document.querySelector(".atividades-embreve .lista-atividades");
 
-    function addTask(description, targetList) {
+    function addTask(description, priority, targetList) {
         const task = document.createElement("li");
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -66,6 +71,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
+        const prioritySpan = document.createElement("span");
+        prioritySpan.textContent = `[${PRIORIDADES[priority]}] `;
+        prioritySpan.classList.add(`priority-${priority}`);
+
         const deleteButton = document.createElement("button");
         deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
         deleteButton.classList.add("excluir-button");
@@ -77,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
         task.appendChild(checkbox);
         task.appendChild(document.createTextNode(description));
         task.appendChild(deleteButton);
+        task.appendChild(prioritySpan);
 
 
         targetList.appendChild(task);
@@ -91,31 +101,57 @@ document.addEventListener("DOMContentLoaded", function () {
             confirmButtonText: 'Adicionar',
             confirmButtonColor: '#E0662F'
         }).then((result) => {
-            if (result.isConfirmed) {
+            if (result.isConfirmed && result.value) {
                 const taskText = result.value;
-
+                // Agora pedir a prioridade
                 Swal.fire({
-                    title: "Escolha a lista: 'Atrasadas', 'Hoje' ou 'Em Breve'",
-                    input: 'text',
+                    title: 'Escolha a prioridade da tarefa:',
+                    input: 'select',
+                    inputOptions: PRIORIDADES,
+                    inputPlaceholder: 'Selecione a prioridade',
                     showCancelButton: true,
-                    confirmButtonText: 'Incluir',
+                    confirmButtonText: 'Próximo',
                     confirmButtonColor: '#E0662F'
-                }).then((listResult) => {
-                    if (listResult.isConfirmed) {
-                        const listName = listResult.value.toLowerCase();
-                        switch (listName) {
-                            case 'atrasadas':
-                                addTask(taskText, lateTasksList);
-                                break;
-                            case 'hoje':
-                                addTask(taskText, todayTasksList);
-                                break;
-                            case 'em breve':
-                                addTask(taskText, upcomingTasksList);
-                                break;
-                            default:
-                                alert("Lista inválida. A tarefa não foi adicionada a nenhuma lista.");
-                        }
+                }).then((priorityResult) => {
+                    if (priorityResult.isConfirmed && priorityResult.value) {
+                        const taskPriority = priorityResult.value;
+                        // Agora pedir a lista
+                        Swal.fire({
+                            title: "Escolha a lista: 'Atrasadas', 'Hoje' ou 'Em Breve'",
+                            input: 'select',
+                            inputOptions: {
+                                'atrasadas': 'Atrasadas',
+                                'hoje': 'Hoje',
+                                'em breve': 'Em Breve'
+                            },
+                            inputPlaceholder: 'Selecione a lista',
+                            showCancelButton: true,
+                            confirmButtonText: 'Incluir',
+                            confirmButtonColor: '#E0662F'
+                        }).then((listResult) => {
+                            if (listResult.isConfirmed && listResult.value) {
+                                const listName = listResult.value;
+                                let targetList;
+                                switch (listName) {
+                                    case 'atrasadas':
+                                        targetList = lateTasksList;
+                                        break;
+                                    case 'hoje':
+                                        targetList = todayTasksList;
+                                        break;
+                                    case 'em breve':
+                                        targetList = upcomingTasksList;
+                                        break;
+                                    default:
+                                        targetList = null;
+                                }
+                                if (targetList) {
+                                    addTask(taskText, taskPriority, targetList);
+                                } else {
+                                    Swal.fire('Erro', 'Lista inválida. A tarefa não foi adicionada a nenhuma lista.', 'error');
+                                }
+                            }
+                        });
                     }
                 });
             }
@@ -211,3 +247,4 @@ document.getElementById("ajuda").addEventListener("click", function() {
 function fecharCentralAjuda() {
     document.getElementById("central-ajuda").style.display = "none";
 }
+

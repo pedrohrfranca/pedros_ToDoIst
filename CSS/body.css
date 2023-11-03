@@ -199,6 +199,20 @@
     background-color: var(--laranja);
 }
 
+.priority-alta {
+    color: red;
+    font-weight: bold;
+}
+
+.priority-media {
+    color: yellow;
+    font-weight: bold;
+}
+
+.priority-baixa {
+    color: green;
+    font-weight: bold;
+}
 
 
 
