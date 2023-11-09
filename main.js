@@ -221,25 +221,25 @@ document.querySelector('.pesquisa').addEventListener('input', searchActivity);
 // PRODUTIVIDADE
 
 document.addEventListener('DOMContentLoaded', function() {
-    const carregarAtividadesBtn = document.getElementById('carregar-atividades');
-    carregarAtividadesBtn.addEventListener('click', function() {
+    const contadorAtividades = document.getElementById('contador-atividades');
+    const container = document;
+
+    function atualizarContador() {
         let totalAtividades = document.querySelectorAll('.atividades-atrasadas .checkbox, .atividades-hoje .checkbox, .atividades-embreve .checkbox').length;
         let atividadesFeitas = document.querySelectorAll('.atividades-atrasadas .checkbox:checked, .atividades-hoje .checkbox:checked, .atividades-embreve .checkbox:checked').length;
-        let atividadesPendentes = totalAtividades - atividadesFeitas;
 
-        let mensagem = `Você já completou ${atividadesFeitas} de ${totalAtividades} atividades. Ainda tem ${atividadesPendentes} pendente(s)`;
+        contadorAtividades.textContent = `${atividadesFeitas}/${totalAtividades}`;
+    }
 
-        Swal.fire({
-            title: 'Produtividade Diária',
-            text: mensagem,
-            icon: 'info',
-            confirmButtonText: 'Entendido',
-            customClass: {
-                confirmButton: 'btn-laranja'
-            }
-        });        
+    container.addEventListener('change', function(event) {
+        if (event.target.matches('.atividades-atrasadas .checkbox, .atividades-hoje .checkbox, .atividades-embreve .checkbox')) {
+            atualizarContador();
+        }
     });
+
+    atualizarContador(); 
 });
+
 
 // AJUDA
 
