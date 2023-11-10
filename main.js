@@ -1,10 +1,10 @@
 // DATA TOPO
-
 var dataHojeElement = document.getElementById("data-hoje");
 
 var dataAtual = new Date();
 
 var options = { year: 'numeric', month: 'long', day: 'numeric' };
+
 var dataFormatada = dataAtual.toLocaleDateString('pt-BR', options);
 
 dataHojeElement.textContent = dataFormatada;
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const todayTasksList = document.querySelector(".atividades-hoje .lista-atividades");
     const upcomingTasksList = document.querySelector(".atividades-embreve .lista-atividades");
 
-    function addTask(description, priority, targetList) {
+    function addTask(description, priority, dueDate, targetList) {
         const task = document.createElement("li");
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -87,8 +87,13 @@ document.addEventListener("DOMContentLoaded", function () {
             task.remove();
         });
 
+        const dueDateSpan = document.createElement("span");
+        dueDateSpan.textContent = ` Vencimento: ${dueDate} `;
+        dueDateSpan.classList.add("due-date");
+
         task.appendChild(checkbox);
         task.appendChild(document.createTextNode(description));
+        task.appendChild(dueDateSpan); // Inclui a data de vencimento
         task.appendChild(prioritySpan);
         task.appendChild(deleteButton);
 
@@ -99,16 +104,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
     addTaskButton.addEventListener("click", async function () {
         try {
+            // Solicita a descrição da tarefa
             const taskResult = await Swal.fire({
                 title: 'Digite a descrição da tarefa:',
                 input: 'text',
                 showCancelButton: true,
-                confirmButtonText: 'Adicionar',
+                confirmButtonText: 'Próximo',
                 confirmButtonColor: '#E0662F'
             });
-
+    
             if (taskResult.isConfirmed && taskResult.value) {
                 const taskText = taskResult.value;
+    
+                // Pergunta se deseja adicionar data de vencimento
+                const addDateResult = await Swal.fire({
+                    title: 'Deseja adicionar uma data de vencimento?',
+                    text: 'Escolha se deseja adicionar uma data de vencimento para esta tarefa.',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim',
+                    cancelButtonText: 'Não',
+                    confirmButtonColor: '#E0662F'
+                });
+                
+                let dueDateFormatted = null;
+                if (addDateResult.isConfirmed) {
+                    // Solicita a data de vencimento
+                    const dueDateResult = await Swal.fire({
+                        title: 'Selecione a data de vencimento:',
+                        input: 'date',
+                        inputPlaceholder: 'Data de Vencimento',
+                        showCancelButton: true,
+                        confirmButtonColor: '#E0662F'
+                    });
+    
+                    if (dueDateResult.value) {
+                        dueDateFormatted = new Date(dueDateResult.value).toLocaleDateString('pt-BR', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                        });
+                    }
+                }
                 
                 const priorityResult = await Swal.fire({
                     title: 'Escolha a prioridade da tarefa:',
@@ -153,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             default:
                                 throw new Error('Lista inválida. A tarefa não foi adicionada a nenhuma lista.');
                         }
-                        addTask(taskText, taskPriority, targetList);
+                        addTask(taskText, taskPriority, dueDateFormatted, targetList);
                     }
                 }
             }
