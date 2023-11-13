@@ -18,10 +18,9 @@
         </div>
         <div>
             <ul class="lista-conteiner">
-                <!-- Substituído o ícone por um span para o contador -->
-                <li class="item-lista" id="carregar-atividades"><span id="contador-atividades">0/0</span></li>
+                <li class="item-lista" id="carregar-atividades"><span class="label">Sua Produtividade: </span><span id="contador-atividades">0/0</span></li>
                 <div id="status-carregamento"></div>
-                <li class="item-lista" id="ajuda"><i class="far fa-question"></i></li>
+                <li class="item-lista" id="ajuda"><span class="label">Ajuda </span><i class="far fa-question"></i></li>
                 <i class="fa-solid fa-list-check" id="logo-iphone"></i>
             </ul>            
         </div>
@@ -76,6 +75,12 @@
             <button onclick="fecharCentralAjuda()">Fechar</button>
         </div>
     </section>
+
+    <footer>
+        <div class="build">
+            <h5>*Build by Pedro França</h5>
+        </div>
+    </footer>
 
     <script src="main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -119,7 +119,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Pergunta se deseja adicionar data de vencimento
                 const addDateResult = await Swal.fire({
                     title: 'Deseja adicionar uma data de vencimento?',
-                    text: 'Escolha se deseja adicionar uma data de vencimento para esta tarefa.',
                     showCancelButton: true,
                     confirmButtonText: 'Sim',
                     cancelButtonText: 'Não',

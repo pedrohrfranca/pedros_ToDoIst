@@ -58,6 +58,14 @@
     display: none;
 }
 
+#carregar-atividades {
+    width: 200px;
+}
+
+#ajuda {
+    width: 80px;
+}
+
 /* Media query para dispositivos com largura máxima de 600px (tamanho típico de telefone) */
 @media (max-width: 1000px) {
     .header {
@@ -86,6 +94,18 @@
         font-size: 20px;
         font-size: 2rem;
         margin-left: 8px;
+    }
+
+    #carregar-atividades {
+        width: auto;
+    }
+
+    #ajuda {
+        width: 30px;
+    }
+
+    .label {
+        display: none;
     }
 }
 
