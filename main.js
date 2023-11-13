@@ -88,12 +88,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         const dueDateSpan = document.createElement("span");
-        dueDateSpan.textContent = ` Vencimento: ${dueDate} `;
-        dueDateSpan.classList.add("due-date");
+
+        if (dueDate) {
+            dueDateSpan.textContent = `  -> Vencimento: ${dueDate} `;
+            dueDateSpan.classList.add("due-date");
+            task.appendChild(dueDateSpan);
+        }
 
         task.appendChild(checkbox);
         task.appendChild(document.createTextNode(description));
-        task.appendChild(dueDateSpan); // Inclui a data de vencimento
+        task.appendChild(dueDateSpan);
         task.appendChild(prioritySpan);
         task.appendChild(deleteButton);
 
