@@ -1,10 +1,10 @@
 // DATA TOPO
-
 var dataHojeElement = document.getElementById("data-hoje");
 
 var dataAtual = new Date();
 
 var options = { year: 'numeric', month: 'long', day: 'numeric' };
+
 var dataFormatada = dataAtual.toLocaleDateString('pt-BR', options);
 
 dataHojeElement.textContent = dataFormatada;
@@ -29,20 +29,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // CHECKBOX
 
-document.addEventListener("DOMContentLoaded", function () {
-    const checkboxes = document.querySelectorAll(".checkbox");
+document.addEventListener('DOMContentLoaded', function () {
+    document.body.addEventListener('change', function (e) {
+        if (e.target.classList.contains('checkbox')) {
+            const task = e.target.parentElement;
+            const list = task.parentElement;
 
-    checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener("change", function () {
-            const label = checkbox.parentElement;
-            if (checkbox.checked) {
-                label.classList.add("riscado");
+            if (e.target.checked) {
+                task.classList.add('riscado');
+                list.appendChild(task);
             } else {
-                label.classList.remove("riscado");
+                task.classList.remove('riscado');
             }
-        });
+        }
     });
 });
+
+
 
 // ADICIONAR ATIVIDADE
 
@@ -57,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const todayTasksList = document.querySelector(".atividades-hoje .lista-atividades");
     const upcomingTasksList = document.querySelector(".atividades-embreve .lista-atividades");
 
-    function addTask(description, priority, targetList) {
+    function addTask(description, priority, dueDate, targetList) {
         const task = document.createElement("li");
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -66,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
         checkbox.addEventListener("change", function () {
             if (checkbox.checked) {
                 task.classList.add("riscado");
+                targetList.appendChild(task);
             } else {
                 task.classList.remove("riscado");
             }
@@ -83,28 +87,69 @@ document.addEventListener("DOMContentLoaded", function () {
             task.remove();
         });
 
+        const dueDateSpan = document.createElement("span");
+
+        if (dueDate) {
+            dueDateSpan.textContent = `  -> Vencimento: ${dueDate} `;
+            dueDateSpan.classList.add("due-date");
+            task.appendChild(dueDateSpan);
+        }
+
         task.appendChild(checkbox);
         task.appendChild(document.createTextNode(description));
-        task.appendChild(deleteButton);
+        task.appendChild(dueDateSpan);
         task.appendChild(prioritySpan);
-
+        task.appendChild(deleteButton);
 
         targetList.appendChild(task);
     }
 
     const addTaskButton = document.getElementById("adicionar-tarefa");
-    addTaskButton.addEventListener("click", function () {
-        Swal.fire({
-            title: 'Digite a descrição da tarefa:',
-            input: 'text',
-            showCancelButton: true,
-            confirmButtonText: 'Adicionar',
-            confirmButtonColor: '#E0662F'
-        }).then((result) => {
-            if (result.isConfirmed && result.value) {
-                const taskText = result.value;
-                // Agora pedir a prioridade
-                Swal.fire({
+
+    addTaskButton.addEventListener("click", async function () {
+        try {
+            // Solicita a descrição da tarefa
+            const taskResult = await Swal.fire({
+                title: 'Digite a descrição da tarefa:',
+                input: 'text',
+                showCancelButton: true,
+                confirmButtonText: 'Próximo',
+                confirmButtonColor: '#E0662F'
+            });
+    
+            if (taskResult.isConfirmed && taskResult.value) {
+                const taskText = taskResult.value;
+    
+                // Pergunta se deseja adicionar data de vencimento
+                const addDateResult = await Swal.fire({
+                    title: 'Deseja adicionar uma data de vencimento?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim',
+                    cancelButtonText: 'Não',
+                    confirmButtonColor: '#E0662F'
+                });
+                
+                let dueDateFormatted = null;
+                if (addDateResult.isConfirmed) {
+                    // Solicita a data de vencimento
+                    const dueDateResult = await Swal.fire({
+                        title: 'Selecione a data de vencimento:',
+                        input: 'date',
+                        inputPlaceholder: 'Data de Vencimento',
+                        showCancelButton: true,
+                        confirmButtonColor: '#E0662F'
+                    });
+    
+                    if (dueDateResult.value) {
+                        dueDateFormatted = new Date(dueDateResult.value).toLocaleDateString('pt-BR', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                        });
+                    }
+                }
+                
+                const priorityResult = await Swal.fire({
                     title: 'Escolha a prioridade da tarefa:',
                     input: 'select',
                     inputOptions: PRIORIDADES,
@@ -112,53 +157,50 @@ document.addEventListener("DOMContentLoaded", function () {
                     showCancelButton: true,
                     confirmButtonText: 'Próximo',
                     confirmButtonColor: '#E0662F'
-                }).then((priorityResult) => {
-                    if (priorityResult.isConfirmed && priorityResult.value) {
-                        const taskPriority = priorityResult.value;
-                        // Agora pedir a lista
-                        Swal.fire({
-                            title: "Escolha a lista: 'Atrasadas', 'Hoje' ou 'Em Breve'",
-                            input: 'select',
-                            inputOptions: {
-                                'atrasadas': 'Atrasadas',
-                                'hoje': 'Hoje',
-                                'em breve': 'Em Breve'
-                            },
-                            inputPlaceholder: 'Selecione a lista',
-                            showCancelButton: true,
-                            confirmButtonText: 'Incluir',
-                            confirmButtonColor: '#E0662F'
-                        }).then((listResult) => {
-                            if (listResult.isConfirmed && listResult.value) {
-                                const listName = listResult.value;
-                                let targetList;
-                                switch (listName) {
-                                    case 'atrasadas':
-                                        targetList = lateTasksList;
-                                        break;
-                                    case 'hoje':
-                                        targetList = todayTasksList;
-                                        break;
-                                    case 'em breve':
-                                        targetList = upcomingTasksList;
-                                        break;
-                                    default:
-                                        targetList = null;
-                                }
-                                if (targetList) {
-                                    addTask(taskText, taskPriority, targetList);
-                                } else {
-                                    Swal.fire('Erro', 'Lista inválida. A tarefa não foi adicionada a nenhuma lista.', 'error');
-                                }
-                            }
-                        });
-                    }
                 });
+
+                if (priorityResult.isConfirmed && priorityResult.value) {
+                    const taskPriority = priorityResult.value;
+
+                    const listResult = await Swal.fire({
+                        title: "Escolha a lista: 'Atrasadas', 'Hoje' ou 'Em Breve'",
+                        input: 'select',
+                        inputOptions: {
+                            'atrasadas': 'Atrasadas',
+                            'hoje': 'Hoje',
+                            'em breve': 'Em Breve'
+                        },
+                        inputPlaceholder: 'Selecione a lista',
+                        showCancelButton: true,
+                        confirmButtonText: 'Incluir',
+                        confirmButtonColor: '#E0662F'
+                    });
+
+                    if (listResult.isConfirmed && listResult.value) {
+                        const listName = listResult.value;
+                        let targetList;
+                        switch (listName) {
+                            case 'atrasadas':
+                                targetList = lateTasksList;
+                                break;
+                            case 'hoje':
+                                targetList = todayTasksList;
+                                break;
+                            case 'em breve':
+                                targetList = upcomingTasksList;
+                                break;
+                            default:
+                                throw new Error('Lista inválida. A tarefa não foi adicionada a nenhuma lista.');
+                        }
+                        addTask(taskText, taskPriority, dueDateFormatted, targetList);
+                    }
+                }
             }
-        });
+        } catch (error) {
+            Swal.fire('Erro', error.message, 'error');
+        }
     });
 });
-
 
 
 // BUSCAR ATIVIDADE
@@ -218,25 +260,25 @@ document.querySelector('.pesquisa').addEventListener('input', searchActivity);
 // PRODUTIVIDADE
 
 document.addEventListener('DOMContentLoaded', function() {
-    const carregarAtividadesBtn = document.getElementById('carregar-atividades');
-    carregarAtividadesBtn.addEventListener('click', function() {
+    const contadorAtividades = document.getElementById('contador-atividades');
+    const container = document;
+
+    function atualizarContador() {
         let totalAtividades = document.querySelectorAll('.atividades-atrasadas .checkbox, .atividades-hoje .checkbox, .atividades-embreve .checkbox').length;
         let atividadesFeitas = document.querySelectorAll('.atividades-atrasadas .checkbox:checked, .atividades-hoje .checkbox:checked, .atividades-embreve .checkbox:checked').length;
-        let atividadesPendentes = totalAtividades - atividadesFeitas;
 
-        let mensagem = `Você já completou ${atividadesFeitas} de ${totalAtividades} atividades. Ainda tem ${atividadesPendentes} pendente(s)`;
+        contadorAtividades.textContent = `${atividadesFeitas}/${totalAtividades}`;
+    }
 
-        Swal.fire({
-            title: 'Produtividade Diária',
-            text: mensagem,
-            icon: 'info',
-            confirmButtonText: 'Entendido',
-            customClass: {
-                confirmButton: 'btn-laranja'
-            }
-        });        
+    container.addEventListener('change', function(event) {
+        if (event.target.matches('.atividades-atrasadas .checkbox, .atividades-hoje .checkbox, .atividades-embreve .checkbox')) {
+            atualizarContador();
+        }
     });
+
+    atualizarContador(); 
 });
+
 
 // AJUDA
 
