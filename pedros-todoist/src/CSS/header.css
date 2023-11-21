@@ -1,0 +1,92 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto 0;
+  background-color: rgb(224, 102, 47);
+  align-items: center;
+  height: 10vh;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 3rem;
+}
+
+.logo-pesquisa {
+  display: flex;
+  align-items: center;
+}
+
+#logo {
+  width: 5vw;
+  height: 5vh;
+}
+
+.pesquisar {
+  border-radius: 12px;
+  border: none;
+  width: 16vw;
+  height: 4vh;
+  margin-left: 5px;
+  padding: 8px;
+}
+
+.produtividade-ajuda {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+}
+
+.produtividade {
+  background-color: var(--preto);
+  color: var(--branco);
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.ajuda {
+  background-color: var(--preto);
+  color: var(--branco);
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    padding: 2rem;
+    height: auto;
+    font-size: 20px;
+  }
+
+  .logo-pesquisa {
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  #logo {
+    width: 50px; /* Tamanho fixo do logo para consistência */
+    height: 50px;
+  }
+
+  .pesquisar {
+    flex-grow: 0.9;
+    margin-left: 0; /* Remover margem à esquerda */
+  }
+
+  .produtividade-ajuda {
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 10px 10px 5px 10px;
+  }
+
+  .produtividade,
+  .ajuda {
+    font-size: 20px;
+    padding: 8px;
+  }
+}
