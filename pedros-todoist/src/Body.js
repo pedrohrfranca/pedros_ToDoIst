@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
@@ -21,13 +21,16 @@ function Body() {
       if (!taskDetails) return;
 
       const { description, priority, dueDate, listName } = taskDetails;
-      const newTask = { description, priority, dueDate };
+      const newTask = { description, priority, dueDate, completed: false };
       if (listName === "atrasadas") {
         setLateTasks([...lateTasks, newTask]);
+        setShowLateTasks(true);
       } else if (listName === "hoje") {
         setTodayTasks([...todayTasks, newTask]);
+        setShowTodayTasks(true);
       } else if (listName === "em breve") {
         setUpcomingTasks([...upcomingTasks, newTask]);
+        setShowUpcomingTasks(true);
       }
     } catch (error) {
       Swal.fire("Erro", error.message, "error");
@@ -110,9 +113,16 @@ function Body() {
 
   // Função para renderizar uma tarefa - Function to render a task
   const renderTask = (task, taskListSetter, index) => (
-    <li key={index}>
-      <input type="checkbox" className="checkbox" />
-      {task.description}
+    <li key={index} className={task.completed ? "task-completed" : ""}>
+      <input
+        type="checkbox"
+        className="checkbox"
+        checked={task.completed}
+        onChange={() => toggleTaskCompletion(taskListSetter, index)}
+      />
+      <span className={task.completed ? "description-completed" : ""}>
+        {task.description}
+      </span>
       <span className={`priority-${task.priority}`}>
         [{PRIORIDADES[task.priority]}]
       </span>
@@ -127,6 +137,43 @@ function Body() {
       </button>
     </li>
   );
+
+  // FUNÇAO PARA ESCONDER LISTA - Function to hide list
+
+  const [showLateTasks, setShowLateTasks] = useState(false);
+  const [showTodayTasks, setShowTodayTasks] = useState(false);
+  const [showUpcomingTasks, setShowUpcomingTasks] = useState(false);
+
+  const toggleLateTasks = () => setShowLateTasks((prev) => !prev);
+  const toggleTodayTasks = () => setShowTodayTasks((prev) => !prev);
+  const toggleUpcomingTasks = () => setShowUpcomingTasks((prev) => !prev);
+
+  // FUNÇAO MARCAR TAREFA CONCLUIDA - Function to CHECK activity done
+
+  const toggleTaskCompletion = (taskListSetter, index) => {
+    taskListSetter((prevTasks) => {
+      return prevTasks.map((task, i) => {
+        if (i === index) {
+          return { ...task, completed: !task.completed };
+        }
+        return task;
+      });
+    });
+  };
+
+  // Ordenar Atividades feitas no final da lista - Checked activities at the end of the list
+
+  useEffect(() => {
+    setLateTasks((prevTasks) => reorderByCompletion(prevTasks));
+    setTodayTasks((prevTasks) => reorderByCompletion(prevTasks));
+    setUpcomingTasks((prevTasks) => reorderByCompletion(prevTasks));
+  }, [lateTasks, todayTasks, upcomingTasks]);
+
+  const reorderByCompletion = (tasks) => {
+    const uncompletedTasks = tasks.filter((task) => !task.completed);
+    const completedTasks = tasks.filter((task) => task.completed);
+    return [...uncompletedTasks, ...completedTasks];
+  };
 
   return (
     <section className="body">
@@ -143,40 +190,58 @@ function Body() {
       {/* Atividades Atrasadas */}
       <div className="atividades-atrasadas">
         <h2>
-          <FontAwesomeIcon id="abrir-atividades" icon={faArrowDown} />
+          <FontAwesomeIcon
+            onClick={toggleLateTasks}
+            id="abrir-atividades"
+            icon={faArrowDown}
+          />
           Atividades Atrasadas
         </h2>
-        <ul className="lista-atividades">
-          {lateTasks.map((task, index) =>
-            renderTask(task, setLateTasks, index)
-          )}
-        </ul>
+        {showLateTasks && (
+          <ul className="lista-atividades">
+            {lateTasks.map((task, index) =>
+              renderTask(task, setLateTasks, index)
+            )}
+          </ul>
+        )}
       </div>
 
       {/* Atividades de Hoje */}
       <div className="atividades-hoje">
         <h2>
-          <FontAwesomeIcon id="abrir-atividades" icon={faArrowDown} />
+          <FontAwesomeIcon
+            onClick={toggleTodayTasks}
+            id="abrir-atividades"
+            icon={faArrowDown}
+          />
           Fazer Hoje
         </h2>
-        <ul className="lista-atividades">
-          {todayTasks.map((task, index) =>
-            renderTask(task, setTodayTasks, index)
-          )}
-        </ul>
+        {showTodayTasks && (
+          <ul className="lista-atividades">
+            {todayTasks.map((task, index) =>
+              renderTask(task, setTodayTasks, index)
+            )}
+          </ul>
+        )}
       </div>
 
       {/* Atividades Em Breve */}
       <div className="atividades-embreve">
         <h2>
-          <FontAwesomeIcon id="abrir-atividades" icon={faArrowDown} />
+          <FontAwesomeIcon
+            onClick={toggleUpcomingTasks}
+            id="abrir-atividades"
+            icon={faArrowDown}
+          />
           Em breve
         </h2>
-        <ul className="lista-atividades">
-          {upcomingTasks.map((task, index) =>
-            renderTask(task, setUpcomingTasks, index)
-          )}
-        </ul>
+        {showUpcomingTasks && (
+          <ul className="lista-atividades">
+            {upcomingTasks.map((task, index) =>
+              renderTask(task, setUpcomingTasks, index)
+            )}
+          </ul>
+        )}
       </div>
     </section>
   );
