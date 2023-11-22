@@ -1,0 +1,199 @@
+.body {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 1rem;
+}
+
+.title-top {
+  margin: 30px 0 30px 0;
+}
+
+.title-top h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--vermelho);
+}
+
+#data-hoje {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+#adicionar-tarefa {
+  width: 1.2vw;
+  height: 1.9vh;
+  border-radius: 5px;
+  color: var(--branco);
+  background-color: var(--preto);
+  margin-right: 4px;
+  font-size: large;
+  cursor: pointer;
+}
+
+.add-tarefas {
+  margin: 30px 0 10px 0;
+  font-size: 1rem;
+}
+
+.separator {
+  margin: 12px 0;
+}
+
+#prioridade-cima {
+  margin-right: 5px;
+}
+
+.atividades-atrasadas {
+  margin: 30px 0 30px 0;
+}
+
+.atividades-hoje {
+  margin: 30px 0 30px 0;
+}
+
+.atividades-embreve {
+  margin: 30px 0 30px 0;
+}
+
+#abrir-atividades,
+#abrir-atividades01,
+#abrir-atividades02 {
+  font-size: 14px;
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  justify-content: center;
+  color: var(--vermelho);
+}
+
+#abrir-atividades:hover,
+#abrir-atividades01:hover,
+#abrir-atividades02:hover {
+  background-color: var(--branco);
+  border: solid 1px var(--laranja);
+  transform: scale(1.08);
+  cursor: pointer;
+}
+
+.lista-atividades {
+  margin: 20px 0 20px 0;
+  list-style: none;
+  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.lista-atividades li {
+  margin-bottom: 15px;
+  margin-right: 8px;
+}
+
+.atividades {
+  margin: 15px 0 15px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--preto);
+  border-radius: 3px;
+  background-color: var(--branco);
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.checkbox:checked {
+  background-color: var(--laranja);
+}
+
+.riscado {
+  text-decoration: line-through;
+  color: var(--laranja);
+}
+
+.resultados-pesquisa {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 1000;
+}
+
+.resultados-pesquisa h2 {
+  margin-top: 0;
+  color: var(--vermelho);
+  font-size: 22px;
+  margin-bottom: 1rem;
+}
+
+.excluir-button {
+  background-color: transparent;
+  border: none;
+  color: var(--vermelho);
+  cursor: pointer;
+}
+
+.btn-laranja {
+  background-color: var(--laranja) !important;
+  border-color: var(--laranja) !important;
+  color: white !important;
+}
+
+.btn-laranja:hover {
+  background-color: var(--vermelho) !important;
+}
+
+.priority-alta {
+  color: red;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.priority-media {
+  color: yellow;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.priority-baixa {
+  color: green;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.build h5 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 15rem;
+}
+
+@media (max-width: 800px) {
+  .body {
+    width: 100%;
+  }
+
+  #adicionar-tarefa {
+    width: 5vw;
+    height: 2.2vh;
+    color: var(--branco);
+    background-color: var(--preto);
+    margin-right: 4px;
+    font-size: large;
+    cursor: pointer;
+  }
+}
