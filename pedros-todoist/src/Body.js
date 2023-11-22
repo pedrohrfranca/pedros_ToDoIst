@@ -5,7 +5,7 @@ import {
   faArrowDown,
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
-// Importar o Swal se necessário
+// Importar o Swal
 import Swal from "sweetalert2";
 
 function Body() {
@@ -14,7 +14,7 @@ function Body() {
   const [todayTasks, setTodayTasks] = useState([]);
   const [upcomingTasks, setUpcomingTasks] = useState([]);
 
-  // Função para adicionar tarefa
+  // Função para adicionar tarefa - Function add.activities
   const addTask = async () => {
     try {
       const taskDetails = await getTaskDetailsFromUser();
@@ -34,9 +34,9 @@ function Body() {
     }
   };
 
-  // Função para obter detalhes da tarefa do usuário
+  // Função para obter detalhes da tarefa do usuário - Function to get details from users
   const getTaskDetailsFromUser = async () => {
-    // Descrição da Tarefa
+    // Descrição da Tarefa - task description
     const descriptionResult = await Swal.fire({
       title: "Digite a descrição da tarefa:",
       input: "text",
@@ -72,7 +72,7 @@ function Body() {
       }
     }
 
-    // Prioridade da Tarefa
+    // Prioridade da Tarefa - Task priority
     const priorityResult = await Swal.fire({
       title: "Escolha a prioridade da tarefa:",
       input: "select",
@@ -84,7 +84,7 @@ function Body() {
     if (!priorityResult.isConfirmed || !priorityResult.value) return null;
     const priority = priorityResult.value;
 
-    // Seleção da Lista
+    // Seleção da Lista - List selection
     const listResult = await Swal.fire({
       title: "Escolha a lista: 'Atrasadas', 'Hoje' ou 'Em Breve'",
       input: "select",
@@ -103,12 +103,12 @@ function Body() {
     return { description, dueDate, priority, listName };
   };
 
-  // Função para remover uma tarefa
+  // Função para remover uma tarefa - Function remove task
   const removeTask = (taskListSetter, index) => {
     taskListSetter((prevTasks) => prevTasks.filter((_, i) => i !== index));
   };
 
-  // Função para renderizar uma tarefa
+  // Função para renderizar uma tarefa - Function to render a task
   const renderTask = (task, taskListSetter, index) => (
     <li key={index}>
       <input type="checkbox" className="checkbox" />
