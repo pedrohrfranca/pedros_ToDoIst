@@ -175,11 +175,43 @@ function Body() {
     return [...uncompletedTasks, ...completedTasks];
   };
 
+  // Function DATA
+
+  const [dataHoje, setDataHoje] = useState("");
+  const [horarioAtual, setHorarioAtual] = useState("");
+
+  useEffect(() => {
+    const atualizarDataHorario = () => {
+      const dataAtual = new Date();
+      const optionsData = { year: "numeric", month: "long", day: "numeric" };
+      const dataFormatada = dataAtual.toLocaleDateString("pt-BR", optionsData);
+      setDataHoje(dataFormatada);
+
+      const optionsHorario = {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      };
+      const horarioFormatado = dataAtual.toLocaleTimeString(
+        "pt-BR",
+        optionsHorario
+      );
+      setHorarioAtual(horarioFormatado);
+    };
+
+    atualizarDataHorario();
+    const interval = setInterval(atualizarDataHorario, 1000); // Atualiza a cada segundo
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="body">
       <div className="title-top">
         <h1>Suas Atividades</h1>
-        <p id="data-hoje"></p>
+        <p id="data-hoje">
+          {dataHoje} - {horarioAtual}
+        </p>
         <p className="add-tarefas" onClick={addTask}>
           <FontAwesomeIcon icon={faPlus} id="adicionar-tarefa" />
           Adicionar uma tarefa

@@ -191,6 +191,11 @@
   font-style: italic;
 }
 
+#data-hoje {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 @media (max-width: 800px) {
   .body {
     width: 100%;
